@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal example</title>
+</head>
+<body>
+  <h1>Minimal example for 'pagehide' event</h1>
+  <p>This minimal example shows a bug with the 'pagehide' event in the Chromium engine. The event is fired not when leaving a page, but when comming back to it via the browser history. This means it cannot be used the close for example EventSource (Server side events = SSE) connections. The following flow will therefore result in several open connections (in Chrome/Edge).</p>
+  <p><b>Flow:</b> Click on the link to the <a href="/page-with-sse">SSE page</a>. Go back via browser history and click on this link again.</a></p>
+  <p><i>Futher information for Chrome</i>: If you came here via browser history from '/page-with-sse', you should also see in the server console that the SSE connection wasn't closed. This indicates, that the 'pagehide' event wasn't fired. If you now use the forward browser navigation, you should see, that the connection is closed following directly by a new SSE connection. This indicates, that the 'pagehide' event is only fired when comming back to a bf cached page.</p>
+</body>
+</html>

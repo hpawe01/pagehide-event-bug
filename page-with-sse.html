@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page with SSE</title>
+</head>
+<body>
+  <h1>Page with SSE</h1>
+  <p>We expect now only one SSE connection. Current number of SSE connections: <span id="sse"></span></p>
+  <p>Now go back with the browser history and click again on the link.</p>
+
+  <script>
+    const el = document.getElementById('sse')
+    let connection;
+
+    window.addEventListener('pageshow', event => {
+      if (!connection) {
+        connection = new EventSource('/sse')
+        connection.addEventListener('message', ev => el.innerText = ev.data)
+      }
+    })
+
+    window.addEventListener('pagehide', event => {
+      if (connection) {
+        connection.close()
+        connection = undefined
+      }
+    })
+  </script>
+</body>
+</html>
